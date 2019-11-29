@@ -1,11 +1,11 @@
 from amadeus.client.decorator import Decorator
-from amadeus.shopping.flight_offers._prediction import FlightChoicePrediction
+from amadeus.shopping.flight_offers._pricing import FlightOffersPrice
 
 
-class FlightOffers(Decorator, object):
+class FlightOffersPricing(Decorator, object):
     def __init__(self, client):
         Decorator.__init__(self, client)
-        self.prediction = FlightChoicePrediction(client)
+        self.pricing = FlightOffersPrice(client)
 
     def get(self, **params):
         '''
@@ -31,5 +31,4 @@ class FlightOffers(Decorator, object):
         :rtype: amadeus.Response
         :raises amadeus.ResponseError: if the request could not be completed
         '''
-        return self.client.get('/v1/shopping/flight-offers', **params)
-
+        return self.client.get('/v2/shopping/flight-offers', **params)

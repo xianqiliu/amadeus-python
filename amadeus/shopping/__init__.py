@@ -4,6 +4,7 @@ from ._flight_destinations import FlightDestinations
 from ._hotel_offers import HotelOffers
 from ._hotel_offers_by_hotel import HotelOffersByHotel
 from ._hotel_offer import HotelOffer
+from ._flight_offers_pricing import FlightOffersPricing
 
 __all__ = ['FlightOffers', 'FlightDates', 'FlightDestinations',
-           'HotelOffers', 'HotelOffersByHotel', 'HotelOffer']
+           'HotelOffers', 'HotelOffersByHotel', 'HotelOffer', 'FlightOffersPricing']
