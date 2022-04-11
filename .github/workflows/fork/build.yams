@@ -1,0 +1,39 @@
+name: build
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: Ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.4, 3.5, 3.6.8]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install sphinx==1.7.2
+          pip install tox
+          python -m pip install sphinx_rtd_theme==0.2.4
+          pip install virtualenv==20.0.1
+      - name: Test with tox
+        if: ${{ matrix.python-version != '3.5' }}
+        run: |
+          tox -e py
+      - name: Before deploy 
+        run: |
+          pip install -e .
+          pip install --upgrade setuptools
+          make docs
+      - name: Build binary wheel and a source tarball
+        if: ${{ matrix.python-version == '3.6.8' }}
+        run: python setup.py sdist
