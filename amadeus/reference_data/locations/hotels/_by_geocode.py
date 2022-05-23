@@ -1,26 +1,26 @@
 from amadeus.client.decorator import Decorator
 
 
-class Airports(Decorator, object):
+class ByGeocode(Decorator, object):
     def get(self, **params):
         '''
-        Returns a list of relevant airports near to a given point.
+        Searches for hotel using a geocode.
 
         .. code-block:: python
 
 
-            amadeus.reference_data.locations.airports.get(
-                longitude=49.0000,
-                latitude=2.55
+            amadeus.reference_data.locations.hotels.by_geocode.get(
+                longitude=2.160873,
+                latitude=41.397158
             )
 
         :param latitude: latitude of geographic location to search around.
-            For example: ``52.5238``
+            For example: ``41.397158``
         :param longitude: longitude of geographic location to search around.
-            For example: ``13.3835``
+            For example: ``2.160873``
 
         :rtype: amadeus.Response
         :raises amadeus.ResponseError: if the request could not be completed
         '''
         return self.client.get(
-            '/v1/reference-data/locations/airports', **params)
+            '/v1/reference-data/locations/hotels/by-geocode', **params)

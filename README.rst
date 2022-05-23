@@ -257,11 +257,25 @@ List of supported endpoints
     
     # Hotel Search
     # Get list of Hotels by city code
-    amadeus.shopping.hotel_offers.get(cityCode = 'LON')
+    amadeus.shopping.hotel_offers.get(cityCode='LON')
     # Get list of offers for a specific hotel
-    amadeus.shopping.hotel_offers_by_hotel.get(hotelId = 'BGLONBGB')
+    amadeus.shopping.hotel_offers_by_hotel.get(hotelId='BGLONBGB')
     # Confirm the availability of a specific offer
     offerId = amadeus.shopping.hotel_offer('8123DD9DE5102DADF5DA3B55C8C575F54114336EE718578753888747FE0652FC').get()
+
+    # Hotel Search v3
+    # Get list of available offers by hotel ids
+    amadeus.shopping.hotel_offers_search.get(hotelIds='RTPAR001', adults='2')
+    # Check conditions of a specific offer
+    amadeus.shopping.hotel_offer_search('XXX').get()
+
+    # Hotel List
+    # Get list of hotels by hotel id
+    amadeus.reference_data.locations.hotels.by_hotels.get(hotelIds='ADPAR001')
+    # Get list of hotels by city code
+    amadeus.reference_data.locations.hotels.by_city.get(cityCode='PAR')
+    # Get list of hotels by a geocode
+    amadeus.reference_data.locations.hotels.by_geocode.get(longitude=2.160873,latitude=41.397158)
 
     # Hotel Booking
     # The offerId comes from the hotel_offer above
@@ -304,9 +318,6 @@ List of supported endpoints
 
     # Airport Routes
     amadeus.airport.direct_destinations.get(departureAirportCode='BLR')
-
-    # AI Generated Photos
-    amadeus.media.files.generated_photos.get(category='MOUNTAIN')
 
     # Trip Parser
     # Encode to Base64 your booking confirmation file (.html, .eml, .pdf supported)

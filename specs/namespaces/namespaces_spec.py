@@ -24,7 +24,10 @@ with description('Namespaces') as self:
         expect(
             client.reference_data.locations.points_of_interest.by_square).not_to(
             be_none)
-        expect(client.reference_data.locations.point_of_interest).not_to(be_none)
+        expect(client.reference_data.locations.hotels).not_to(be_none)
+        expect(client.reference_data.locations.hotels.by_hotels).not_to(be_none)
+        expect(client.reference_data.locations.hotels.by_city).not_to(be_none)
+        expect(client.reference_data.locations.hotels.by_geocode).not_to(be_none)
         expect(client.travel).not_to(be_none)
         expect(client.travel.analytics).not_to(be_none)
         expect(client.travel.analytics.air_traffic.traveled).not_to(be_none)
@@ -49,6 +52,9 @@ with description('Namespaces') as self:
         expect(client.shopping.hotel_offer).not_to(be_none)
         expect(client.shopping.hotel_offers_by_hotel).not_to(be_none)
 
+        expect(client.shopping.hotel_offers_search).not_to(be_none)
+        expect(client.shopping.hotel_offer_search).not_to(be_none)
+
         expect(client.shopping.activities).not_to(be_none)
 
         expect(client.shopping.availability).not_to(be_none)
@@ -63,7 +69,6 @@ with description('Namespaces') as self:
 
         expect(client.media).not_to(be_none)
         expect(client.media.files).not_to(be_none)
-        expect(client.media.files.generated_photos).not_to(be_none)
 
         expect(client.travel.trip_parser_jobs).not_to(be_none)
         expect(client.travel.trip_parser_jobs.status).not_to(be_none)
@@ -106,7 +111,12 @@ with description('Namespaces') as self:
         expect(client.reference_data.locations.point_of_interest(
             '9CB40CB5D0').get).not_to(be_none)
         expect(client.reference_data.recommended_locations.get).not_to(be_none)
-
+        expect(
+            client.reference_data.locations.hotels.by_city.get).not_to(be_none)
+        expect(
+            client.reference_data.locations.hotels.by_hotels.get).not_to(be_none)
+        expect(
+            client.reference_data.locations.hotels.by_geocode.get).not_to(be_none)
         expect(client.travel.analytics.air_traffic.traveled.get).not_to(be_none)
         expect(client.travel.analytics.air_traffic.booked.get).not_to(be_none)
         expect(
@@ -126,12 +136,13 @@ with description('Namespaces') as self:
         expect(client.shopping.hotel_offers_by_hotel.get).not_to(be_none)
         expect(client.shopping.hotel_offer('123').get).not_to(be_none)
 
+        expect(client.shopping.hotel_offers_search.get).not_to(be_none)
+        expect(client.shopping.hotel_offer_search('123').get).not_to(be_none)
+
         expect(client.e_reputation.hotel_sentiments.get).not_to(be_none)
 
         expect(client.airport.predictions.on_time.get).not_to(be_none)
         expect(client.airport.direct_destinations.get).not_to(be_none)
-
-        expect(client.media.files.generated_photos.get).not_to(be_none)
 
         expect(client.travel.trip_parser_jobs.status('123').get).not_to(be_none)
         expect(client.travel.trip_parser_jobs.result('123').get).not_to(be_none)
@@ -294,6 +305,20 @@ with description('Namespaces') as self:
                 '/v2/shopping/hotel-offers/XXX', a='b'
             ))
 
+        with it('.shopping.hotel_offers_search.get'):
+            self.client.shopping.hotel_offers_search.get(
+                hotelIds='RTPAR001', adults=2)
+            expect(self.client.get).to(have_been_called_with(
+                '/v3/shopping/hotel-offers', hotelIds='RTPAR001',
+                adults=2
+            ))
+
+        with it('.shopping.hotel_offer_search().get'):
+            self.client.shopping.hotel_offer_search('XXX').get(a='b')
+            expect(self.client.get).to(have_been_called_with(
+                '/v3/shopping/hotel-offers/XXX', a='b'
+            ))
+
         with it('.shopping.seatmaps.get'):
             self.client.shopping.seatmaps.get(**{'a': 'b'})
             expect(self.client.get).to(have_been_called_with(
@@ -316,12 +341,6 @@ with description('Namespaces') as self:
             self.client.airport.direct_destinations.get(a='b')
             expect(self.client.get).to(have_been_called_with(
                 '/v1/airport/direct-destinations', a='b'
-            ))
-
-        with it('.media.files.generated_photos.get'):
-            self.client.media.files.generated_photos.get(a='b')
-            expect(self.client.get).to(have_been_called_with(
-                '/v2/media/files/generated-photos', a='b'
             ))
 
         with it('.travel.trip_parser_jobs.status().get'):
@@ -517,4 +536,25 @@ with description('Namespaces') as self:
             self.client.duty_of_care.diseases.covid19_area_report.get(a='b')
             expect(self.client.get).to(have_been_called_with(
                 '/v1/duty-of-care/diseases/covid19-area-report', a='b'
+            ))
+
+        with it('.reference_data.locations.hotels.by_hotels.get'):
+            self.client.reference_data.locations.hotels.by_hotels.get(
+                a='b')
+            expect(self.client.get).to(have_been_called_with(
+                '/v1/reference-data/locations/hotels/by-hotels', a='b'
+            ))
+
+        with it('.reference_data.locations.hotels.by_city.get'):
+            self.client.reference_data.locations.hotels.by_city.get(
+                a='b')
+            expect(self.client.get).to(have_been_called_with(
+                '/v1/reference-data/locations/hotels/by-city', a='b'
+            ))
+
+        with it('.reference_data.locations.hotels.by_geocode.get'):
+            self.client.reference_data.locations.hotels.by_geocode.get(
+                a='b')
+            expect(self.client.get).to(have_been_called_with(
+                '/v1/reference-data/locations/hotels/by-geocode', a='b'
             ))

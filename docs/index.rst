@@ -62,6 +62,12 @@ Shopping/Hotels
 .. autoclass:: amadeus.shopping.hotel.Offer
   :members: get
 
+.. autoclass:: amadeus.shopping.hotel.HotelOffersSearch
+  :members: get
+
+.. autoclass:: amadeus.shopping.hotel.HotelOfferSearch
+  :members: get
+
 Shopping/FlightOffers
 ===============
 
@@ -161,6 +167,18 @@ ReferenceData/RecommendedLocations
 .. autoclass:: amadeus.reference_data.RecommendedLocations
   :members: get
 
+ReferenceData/Locations/Hotels
+=======================
+
+.. autoclass:: amadeus.reference_data.hotels.ByHotels
+  :members: get
+
+.. autoclass:: amadeus.reference_data.hotels.ByCity
+  :members: get
+
+.. autoclass:: amadeus.reference_data.hotels.ByGeocode
+  :members: get
+
 Helper/Location
 ==================
 
@@ -181,8 +199,6 @@ Airport/DirectDestinations
 Media/Files
 ================
 
-.. autoclass:: amadeus.media.files.GeneratedPhotos
-  :members: get
 
 Booking
 ================
